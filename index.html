@@ -45,19 +45,26 @@
         let messageIndex = 0;
 
         function moveAndChange() {
-            const noBtn = document.getElementById('noBtn');
-            const mainGif = document.getElementById('mainGif');
-            const questionText = document.getElementById('question');
+    const noBtn = document.getElementById('noBtn');
+    const mainGif = document.getElementById('mainGif');
+    const questionText = document.getElementById('question');
 
-            // Mișcare buton
-            const x = Math.random() * (window.innerWidth - 120);
-            const y = Math.random() * (window.innerHeight - 60);
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+    // Calculăm zona sigură (Lățime ecran - Lățime buton - Marjă)
+    // Folosim Math.max pentru a evita numere negative pe ecrane foarte mici
+    const maxWidth = window.innerWidth - noBtn.offsetWidth - 20;
+    const maxHeight = window.innerHeight - noBtn.offsetHeight - 20;
 
-            // Schimbare text
-            questionText.innerText = noMessages[messageIndex];
-            messageIndex = (messageIndex + 1) % noMessages.length;
+    // Generăm poziția în interiorul acestor limite
+    const x = Math.max(0, Math.random() * maxWidth);
+    const y = Math.max(0, Math.random() * maxHeight);
+
+    // Aplicăm noile coordonate
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+
+    // Schimbăm textul și GIF-ul ca înainte
+    questionText.innerText = noMessages[messageIndex];
+    messageIndex = (messageIndex + 1) % noMessages.length;
 
             // Schimbare GIF (doar dacă există în listă)
             if(noGifs.length > 0) {
