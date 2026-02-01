@@ -52,6 +52,8 @@
             background-color: #ff69b4;
             color: white;
             font-weight: bold;
+            position: relative;
+            z-index: 10;
         }
 
         #yesBtn:hover {
@@ -63,6 +65,7 @@
             background-color: #f0f0f0;
             color: #666;
             position: absolute;
+            z-index: 5;
         }
 
         img {
@@ -95,12 +98,13 @@
         const noMessages = [
             "¿Estás segura? 🥺",
             "Piénsalo un poquito más...",
-            
+            "¡Por favor! ❤️",
+            "¡Dime que sí! ✨"
         ];
 
         const noGifs = [
-    "trist1.gif",
-    "trist2.gif"
+            "trist1.gif",
+            "trist2.gif"
         ];
 
         let messageIndex = 0;
@@ -110,19 +114,26 @@
             const mainGif = document.getElementById('mainGif');
             const questionText = document.getElementById('question');
 
+            // Calculăm poziția butunului să rămână în interiorul ecranului
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
+            // Schimbăm textul
             questionText.innerText = noMessages[messageIndex];
             messageIndex = (messageIndex + 1) % noMessages.length;
-            mainGif.src = noGifs[Math.floor(Math.random() * noGifs.length)];
+
+            // Schimbăm GIF-ul
+            if(noGifs.length > 0) {
+                mainGif.src = noGifs[Math.floor(Math.random() * noGifs.length)];
+            }
         }
 
         function celebrate() {
             const song = document.getElementById('loveSong');
-            song.play();
+            song.play().catch(e => console.log("Audio play failed"));
 
             confetti({
                 particleCount: 150,
